@@ -5,7 +5,7 @@ body{
     font-family: 'Bricolage Grotesque', sans-serif;
 }
 .kanban-board {
-    padding-top: 25vh;
+    padding-top: 20vh;
     display: flex;
     justify-content: center;
     gap: 5rem;
