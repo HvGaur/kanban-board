@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CdkDropList, CdkDropListGroup, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CardComponent } from '../card/card.component';
 
@@ -12,10 +12,10 @@ import { CardComponent } from '../card/card.component';
   styleUrl: './column.component.css'
 })
 export class ColumnComponent {
-  @Input() column!: { name: string; tasks: string[] };
+  @Input() column!: { id: number; name: string; tasks: string[] };
   @Output() drop = new EventEmitter<CdkDragDrop<string[]>>();
-  @Output() addTask = new EventEmitter<string>();
-  @Output() deleteTask = new EventEmitter<string>();
+  @Output() addTask = new EventEmitter<{ task: string, columnId: number }>();
+  @Output() deleteTask = new EventEmitter<{ task: string, columnId: number }>();
 
   newTask: string = '';
 
@@ -25,12 +25,12 @@ export class ColumnComponent {
 
   addTaskToColumn() {
     if (this.newTask.trim()) {
-      this.addTask.emit(this.newTask);
+      this.addTask.emit({ task: this.newTask, columnId: this.column.id });
       this.newTask = ''; // Reset input
     }
   }
 
   deleteTaskFromColumn(task: string) {
-    this.deleteTask.emit(task);
+    this.deleteTask.emit({ task, columnId: this.column.id });
   }
 }

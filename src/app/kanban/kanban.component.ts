@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, CdkDropListGroup, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ColumnComponent } from '../column/column.component';
+import { SupabaseService } from '../supabase.service';
 
 interface Column {
+  id: number;
   name: string;
   tasks: string[];
 }
@@ -16,49 +18,48 @@ interface Column {
   styleUrl: './kanban.component.css'
 })
 export class KanbanComponent implements OnInit {
-  columns: Column[] = [ // ✅ Type explicitly defined
-    { name: 'To Do', tasks: [] },
-    { name: 'In Progress', tasks: [] },
-    { name: 'Done', tasks: [] },
-  ];
+  columns: Column[] = [];
 
-  ngOnInit() {
-    this.loadTasks();
+  constructor(private supabaseService: SupabaseService) {}
+
+  async ngOnInit() {
+    await this.loadTasks();
   }
 
-  saveTasks() {
-    localStorage.setItem('kanbanTasks', JSON.stringify(this.columns));
+  async loadTasks() {
+    const { data, error } = await this.supabaseService.client.from('columns').select('*');
+    if (error) console.error('Error loading tasks:', error);
+    else this.columns = data || [];
   }
 
-  loadTasks() {
-    const savedTasks = localStorage.getItem('kanbanTasks');
-    if (savedTasks) {
-      this.columns = JSON.parse(savedTasks);
+  async saveTasks() {
+    for (const column of this.columns) {
+      await this.supabaseService.client.from('columns').upsert(column);
     }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  async drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
-    this.saveTasks();
+    await this.saveTasks();
   }
 
-  addTask(task: string, columnName: string) {
-    const column = this.columns.find(col => col.name === columnName);
+  async addTask(task: string, columnId: number) {
+    const column = this.columns.find(col => col.id === columnId);
     if (column) {
-      column.tasks.push(task); // ✅ Now TypeScript knows tasks is a string[]
-      this.saveTasks();
+      column.tasks.push(task);
+      await this.saveTasks();
     }
   }
 
-  deleteTask(task: string, columnName: string) {
-    const column = this.columns.find(col => col.name === columnName);
+  async deleteTask(task: string, columnId: number) {
+    const column = this.columns.find(col => col.id === columnId);
     if (column) {
-      column.tasks = column.tasks.filter(t => t !== task); // ✅ Type is clear now
-      this.saveTasks();
+      column.tasks = column.tasks.filter(t => t !== task);
+      await this.saveTasks();
     }
   }
 }

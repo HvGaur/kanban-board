@@ -11,5 +11,11 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 })
 export class CardComponent {
   @Input() task!: string;
-  @Output() delete = new EventEmitter<string>();
+  @Input() columnId!: number;
+  @Output() delete = new EventEmitter<{ task: string, columnId: number }>();
+
+  deleteTask() {
+    this.delete.emit({ task: this.task, columnId: this.columnId });
+  }
+  
 }

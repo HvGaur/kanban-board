@@ -3,7 +3,8 @@
       *ngFor="let column of columns" 
       [column]="column" 
       (drop)="drop($event)" 
-      (addTask)="addTask($event, column.name)"
-      (deleteTask)="deleteTask($event, column.name)">
+      (addTask)="addTask($event.task, $event.columnId)"
+      (deleteTask)="deleteTask($event.task, $event.columnId)"
+      >
     </app-column>
   </div>
