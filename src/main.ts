@@ -1,6 +1,8 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { KanbanComponent } from './app/kanban/kanban.component';
+// Create a root container dynamically
+const root = document.createElement('app-kanban');
+document.body.appendChild(root);
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+// Bootstrap the application
+bootstrapApplication(KanbanComponent).catch(err => console.error(err));

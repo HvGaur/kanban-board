@@ -1,0 +1,20 @@
+<div class="column">
+    <h3>{{ column.name }}</h3>
+    <div class="inp-handler">
+      <input [(ngModel)]="newTask" placeholder="New task..." class="new-task" />
+      <button (click)="addTaskToColumn()">+</button>
+    </div>
+    <div
+      cdkDropList
+      [cdkDropListData]="column.tasks"
+      [cdkDropListConnectedTo]="connectedDropLists"
+      (cdkDropListDropped)="drop.emit($event)"
+      class="task-list"
+    >
+      <app-card 
+        *ngFor="let task of column.tasks" 
+        [task]="task" 
+        (delete)="deleteTaskFromColumn(task)">
+      </app-card>
+    </div>
+  </div>

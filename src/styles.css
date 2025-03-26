@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+body{
+    background-color: rgb(30, 30, 30);
+    font-family: 'Bricolage Grotesque', sans-serif;
+}
+.kanban-board {
+    padding-top: 25vh;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    /* align-items: center; */
+
+  }
+  
+  
+  .card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 5px 0;
+    padding: 10px;
+  }

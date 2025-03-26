@@ -1,0 +1,48 @@
+.column {
+    background:rgb(255, 228, 122);
+    padding: 10px;
+    width: 35vh;
+    border-radius: 8px;
+  }
+  h3 {
+    text-align: center;
+    font-size: 3vh;
+  }
+
+  .task-list {
+    min-height: 10px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  /* input {
+    width: 80%;
+    padding: 4px;
+    margin-bottom: 8px;
+  }
+  button {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 8px;
+  } */
+
+.inp-handler{
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    gap: 5px;
+    /* max-width: 15rem; */
+}
+input{
+    
+    padding: 7px;
+    border-radius: 4px;
+    border: 1px solid rgb(145, 145, 145);
+}
+button{
+    background-color: rgb(30, 30, 30);
+    padding: 7px;
+    color: rgb(255, 228, 122);
+    margin-bottom: 8px;
+    border-radius: 4px;
+    border: 1px solid rgb(145, 145, 145);
+}
